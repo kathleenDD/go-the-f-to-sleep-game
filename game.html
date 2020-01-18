@@ -1,25 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Go The F* To Sleep - Game Page</title>
-    <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Roboto&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Fredoka+One|Roboto&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script type="module" src="main.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="game-container">
-        <h2><a href="index.html">GO THE F* TO SLEEP</a></h2>
-        <progress max="100" value="80"></progress>
-        <div id="game-area"></div>
-        <div id="wine-container">
-            <img class="icon" src="images/wine.png" alt="wine-glass">
-            <img class="icon" src="images/wine.png" alt="wine-glass">
-            <img class="icon" src="images/wine.png" alt="wine-glass">
+      <h2><a href="index.html">GO THE F* TO SLEEP</a></h2>
+      <div id="tmw-container">
+        <div class="timer-container">
+          <img class="sm-icon" src="images/clock.png" />
+          <span id="timer">30 s</span>
         </div>
-        <div></div>
+        <div class="meter-container">
+            <span id="meter" style="width: 83%">
+                <span id="green-area">D0D0</span>
+                <span id="red-area"></span>
+            </span>
+        </div>
+        <div id="wine-container">
+            <img class="sm-icon" src="images/bw-wine.png" alt="wine-glass" />
+            <img class="sm-icon" src="images/wine.png" alt="wine-glass" />
+            <img class="sm-icon" src="images/wine.png" alt="wine-glass" />
+          </div>
+      </div>
+      <div id="game-window">
+          <div class="falling-objects">
+              <img id="bear" class="icon" src="images/bear.png">
+              <img id="gamepad" class="icon" src="images/gamepad.png">
+              <img id="ice-cream" class="icon" src="images/ice-cream.png">
+              <img id="milk" class="icon" src="images/milk.png">
+              <img id="toy" class="icon" src="images/robot.png">
+              <img id="sheep" class="icon" src="images/sheep.png">
+              <img id="soothie" class="icon" src="images/soothie.png">
+          </div>
+          <div id="catcher">
+              <img class="med-icon" src="images/zzz.png">
+          </div>
+      </div>
+      <div id="bottom-container">
+        <img class="btm-face lrg-icon" src="animojis/happy1.png">
+        <div id="msg-container">
+            <p id="message">Weee!</p>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

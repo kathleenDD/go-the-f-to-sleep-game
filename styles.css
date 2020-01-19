@@ -269,7 +269,7 @@ ICONS
 */
 
 .icon {
-    width: 50px;
+    width: 60px;
 }
 
 .tiny-icon {
@@ -282,7 +282,7 @@ ICONS
 }
 
 .med-icon {
-    width: 60px;
+    width: 80px;
 }
 
 .lrg-icon {
@@ -434,4 +434,32 @@ img.btm-face {
 
 #message {
     font-size: 1.5em;
+}
+
+/*
+======
+pound animation
+======
+*/
+
+.pound{
+	animation-name: pound;
+	-webkit-animation-name: pound;	
+
+	animation-duration: 0.5s;	
+	-webkit-animation-duration: 0.5s;
+
+	animation-timing-function: ease;	
+	-webkit-animation-timing-function: ease;
+
+	animation-iteration-count: infinite;
+	-webkit-animation-iteration-count: infinite;
+
+	visibility: visible !important;	
+}
+@keyframes pound {
+	to { transform: scale(1.2); }
+}
+@-webkit-keyframes pound {
+	to { transform: scale(1.2); }
 }

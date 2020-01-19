@@ -4,15 +4,27 @@ function setKeys() {
 }
 
 function setFallingObjects() {
-    // 
+    // 25 sheep
+    // 1 teddy, 1 milk, 1 soothie
+    // 1 gamepad, 1 ice cream, 1 robot -- only falls when blue is full
+}
+
+function setTimer() {
+    
 }
 
 function meterAnimation() {
     // set varying animation per color
+    // panic when red
+
 }
 
 function increaseMeter() {
-    // increases whenever a sheep or prop is caught
+    // meter increases whenever a sheep or prop is caught
+}
+
+function reduceMeter() {
+    // reduce meter by 1% every sec
 }
 
 function drinkWine() {
@@ -21,10 +33,6 @@ function drinkWine() {
 
 function addTime() {
     // adds 5 secs after wine is clicked
-}
-
-function reduceMeter() {
-    // reduce meter by 2% every sec
 }
 
 function calcScore() {

@@ -206,9 +206,9 @@ MODAL
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #11242D;
+    color: #2ab1e5;
     text-align: center;
-    background-color: #2ab1e5;
+    background-color: #11242D;
     padding: 1rem 1.5rem;
     width: 24rem;
     border-radius: 0.5rem;
@@ -226,7 +226,7 @@ MODAL
 
 .close-button:hover {
     color: #fff;
-    background-color: #11242D;
+    background-color: #2ab1e5;
 }
 
 .show-modal {
@@ -248,7 +248,7 @@ $$$$  GAME PAGE  $$$$
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px;
+    margin: 10px;
 }
 
 #wine-container {
@@ -302,18 +302,22 @@ TIMER
 }
 
 #timer {
+    width: 30px;
+    margin: 0 5px;
+}
+
+.span-timer {
     font-family: 'Fredoka One', cursive;
-    color: white;
+    color: #f1eece;
     text-shadow: 2px 2px #000;
     font-size: 1.5em;
-    margin-left: 5px;
 }
 
 
 /* 
-============
-PROGRESS BAR
-============
+=============================
+PROGRESS BAR - ALT GAME MODE
+=============================
 */
 
 .meter-container {
@@ -367,6 +371,29 @@ PROGRESS BAR
     background: #fa113d;
     position: absolute;
 
+}
+
+/* 
+==============
+SHEEP COUNTER
+==============
+*/
+
+.counter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 50px;
+}
+
+#counter {
+    width: 50px;
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    color: #feca1e;
+    text-shadow: 2px 2px #000;
+    font-size: 2.5em;
+    margin: 0 10px;
 }
 
 

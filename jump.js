@@ -1,6 +1,6 @@
 // ===== CONSTANT / STARTING VALUES =====
-let duration = 3; // duration of the game in seconds
-let plusTime = 3; // additional time
+let startT = 5; // duration of the game in seconds
+let plusT = 5; // additional time
 let numWine = 3; // number of wine
 
 
@@ -85,16 +85,19 @@ function serveWine() {
     wine.classList.remove("wine");
 }
 
-function addTime(numWine,numSheep) {
+function addTime(numSheep,wines) {
     // adds more time when necessary
-    while (numWine > 0) {
-        if (numSheep < 50) {
-            serveWine();
-            startTimer(plusTime);
-        }
-        numWine --;
-
+    // let numSheep = 10;
+    // let numWine = 3; // number of wine at the start
+    if (numSheep() < 50 && wines > 0) {
+        serveWine();
+        startTimer(plusT); // adds 10 more seconds
+        debugger
+    } 
+    else {
+        winOrLose();
     }
+
 }
 
 
@@ -121,12 +124,15 @@ function winOrLose() {
 
 function startTimer(num) { 
     // starts 30s timer
+    let wines = 3;
     let timer = setInterval(() => {
         num--;
         document.getElementById("timer").textContent = num;
         if (num <= 0) {
             clearInterval(timer); // stops timer
-            addTime(numWine,countSheep());
+            wines --;
+            addTime(countSheep,wines);
+            debugger
         }
     }, 1000);
 }
@@ -139,10 +145,9 @@ function countDown() {
         document.getElementById("countdown").textContent = sec;
         if (sec <= 0) {
             clearInterval(counter); // stops the counter
-            printDiv.innerHTML = ""; // clears the container
-            
+            printDiv.innerHTML = ""; // clears the countdown container
             // calls the ff functions after countdown:
-            startTimer(duration);
+            startTimer(startT); // duration of the game
             setChar();
         }
     }, 1000);
@@ -160,7 +165,7 @@ function initialize() {
     
 }
 
-// initialize();
+initialize();
 
 
 // countdown 321 before game starts

@@ -17,50 +17,62 @@
       <h2><a href="index.html">GO THE F* TO SLEEP</a></h2>
       <div id="tmw-container">
         <div class="timer-container">
-          <img class="sm-icon" src="images/clock.png" alt="clock"/>
-          <span class="span-timer" id="timer">30</span><span class="span-timer">s</span>
+          <img class="sm-icon" src="images/clock.png" alt="clock" />
+          <span class="span-timer" id="timer">30</span
+          ><span class="span-timer">s</span>
         </div>
-<!-- ******************************** -->
-<!-- DODO METER FOR ANOTHER GAME MODE -->
+        <!-- ******************************** -->
+        <!-- DODO METER FOR ANOTHER GAME MODE -->
         <!-- <div class="meter-container">
             <span id="meter" style="width: 83%">
                 <span id="green-area">D0D0</span>
                 <span id="red-area"></span>
             </span>
         </div> -->
-<!-- ******************************** -->
-<!-- SHEEP COUNTER FOR CURRENT GAME MODE -->
+        <!-- ******************************** -->
+        <!-- SHEEP COUNTER FOR CURRENT GAME MODE -->
         <div class="counter-container">
-            <img class="sm-icon" src="images/sheep.png" alt="sheep">
-            <span id="counter">0</span>
+          <img class="sm-icon" src="images/sheep.png" alt="sheep" />
+          <span id="counter">0</span>
         </div>
-<!-- ******************************** -->
+        <!-- ******************************** -->
         <div id="wine-container">
-            <img class="sm-icon" src="images/bw-wine.png" alt="wine-glass" />
-            <img class="sm-icon" src="images/wine.png" alt="wine-glass" />
-            <img class="sm-icon" src="images/wine.png" alt="wine-glass" />
-          </div>
+          <img class="wine sm-icon" src="images/wine.png" alt="wine-glass" />
+          <img class="wine sm-icon" src="images/wine.png" alt="wine-glass" />
+          <img class="wine sm-icon" src="images/wine.png" alt="wine-glass" />
+        </div>
       </div>
       <div id="game-window">
-          <div class="falling-objects">
-              <!-- <img id="bear" class="icon" src="images/bear.png"> -->
-              <!-- <img id="milk" class="icon" src="images/milk.png"> -->
-              <!-- <img id="soothie" class="icon" src="images/soothie.png"> -->
-              <img id="gamepad" class="icon" src="images/gamepad.png">
-              <img id="ice-cream" class="icon" src="images/ice-cream.png">
-              <img id="toy" class="icon" src="images/robot.png">
-              <img id="sheep" class="icon" src="images/sheep.png">
-          </div>
-          <div id="catcher">
-              <img class="med-icon" src="images/zzz.png">
-          </div>
+        <div class="falling-objects">
+            <!-- **************************************** -->
+            <!-- WILL NOT BE USED IN CURRENT GAME MODE -->
+          <!-- <img id="bear" class="icon" src="images/bear.png"> -->
+          <!-- <img id="milk" class="icon" src="images/milk.png"> -->
+          <!-- <img id="soothie" class="icon" src="images/soothie.png"> -->
+          <!-- *************************************** -->
+          <!-- <img id="gamepad" class="icon" src="images/gamepad.png" />
+          <img id="ice-cream" class="icon" src="images/ice-cream.png" />
+          <img id="robot" class="icon" src="images/robot.png" />
+          <img id="sheep" class="icon" src="images/sheep.png" /> -->
+        </div>
+        <div id="char-container"></div>
       </div>
       <div id="bottom-container">
-        <img class="btm-face lrg-icon" src="animojis/happy1.png">
-        <div id="msg-container">
-            <p id="message">Weee!</p>
-        </div>
+          <div id="face-container">
+              <img class="btm-face lrg-icon" src="animojis/happy1.png" />
+          </div>
+          <div id="print-container">
+            <span id="countdown">3</span>
+            <!-- <div id="msg-container">
+                <p id="message">Weee!</p>
+            </div> -->
+          </div>
       </div>
     </div>
   </body>
 </html>
+
+<!-- 
+** Popup message after game ends with message
+** Add new modal when game ends with option to play new game or go home
+ -->

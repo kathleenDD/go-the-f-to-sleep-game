@@ -5,6 +5,9 @@ start.onclick = () => {
     location.href = "/game.html";
 }
 
+// CHOOSE GAME MODE BUTTON
+
+
 // MODAL - HOW TO PLAY
 
 let modal = document.querySelector(".modal");

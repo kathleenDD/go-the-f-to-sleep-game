@@ -418,14 +418,6 @@ GAME WINDOW
     grid-template-rows: repeat(7, 1fr);
 }
 
-
-#character{
-    position: absolute;
-    bottom: 0;
-    margin: 0px;
-    /* margin-left maximum for "fall" game: 393px */
-}
-
 /* 
 =======
 BOTTOM

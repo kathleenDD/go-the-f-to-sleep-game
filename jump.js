@@ -1,18 +1,15 @@
 // Don't forget to delete starting values and set the
 // real values inside the function
 
-
-
-
 // ===== STARTING VALUES =====
 let startT = 30; // duration of the game in seconds
-let plusT = 11; // additional time
+let plusT = 6; // additional time
 
 
 // ===== KEYBOARD =====
 
 function setKeys(e) {
-    // use up and down arrow keys to move character
+    // set up and down arrow keys to move character
     const key = e.code;
     if (key === "ArrowUp" || key === "ArrowDown") {
         let direction = key === "ArrowDown" ? "down" : "up";
@@ -23,23 +20,21 @@ function setKeys(e) {
 // ===== CHARACTER =====
 
 function setChar() {
-    // generate character after countdown
-    const character = document.getElementById("char-container");
+    // generate character, function called after countdown
+    const character = document.getElementById("character");
     const charImg = document.createElement("img");
     charImg.className = "med-icon "; // there must be a space to separate the classes being added
     charImg.className += "pulse";
-    // charImg.setAttribute("id", "character");
     charImg.src = "images/me.png";
     character.append(charImg);
-
-    // position character
+    // position character:
     character.style.gridColumn = "1";
     character.style.gridRow = "4/5";
 }
 
 function moveChar(direction) {
-    // character movement
-    const character = document.getElementById("char-container");
+    // character movement, up or down
+    const character = document.getElementById("character");
     let charPosition = Number(character.style.gridRow[0]);
     if (direction === "up" && charPosition-1 > 0) {
         character.style.gridRow = `${charPosition-1} / ${charPosition}`;
@@ -59,8 +54,19 @@ function generateItems() {
 
 // ===== FLOATING SHEEP =====
 
-function setFloaters() {
-    // position floating sheep
+function setSheep() {
+    // generate floating sheep
+    const grid = document.getElementById("game-window");
+    const sheep = document.createElement("span");
+    const sheepImg = document.createElement("img");
+    sheepImg.className = "icon";
+    sheepImg.src = "images/sheep.png"
+    sheep.append(sheepImg);
+    // position sheep
+    const gridStart = Math.floor(Math.random()*8);
+    sheep.style.gridRow = `${gridStart} / ${gridStart+1}`;
+    sheep.style.gridColumn = "8";
+    grid.appendChild(sheep);
 }
 
 
@@ -155,25 +161,24 @@ function countDown() {
         if (sec <= 0) {
             clearInterval(counter); // stops the counter
             printDiv.innerHTML = ""; // clears the countdown container
-            startTimer(startT); // duration of the game
-            setChar();
+            initialize();
         }
     }, 1000);
     
 }
 
 
-// ============================================
-// CALL FUNCTIONS
-
 function initialize() {
-    // houses main functions
-    window.onload = countDown;
+    startTimer(startT); // duration of the game
+    setChar();
+    setSheep();
     window.onkeydown = setKeys;
     
 }
 
-initialize();
+window.onload = countDown;
 
 
+// Choose character
+// Choose game mode
 // Add function for sleep props that can make character invincible for a few sec

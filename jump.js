@@ -1,4 +1,10 @@
-// ===== CONSTANT / STARTING VALUES =====
+// Don't forget to delete starting values and set the
+// real values inside the function
+
+
+
+
+// ===== STARTING VALUES =====
 let startT = 5; // duration of the game in seconds
 let plusT = 5; // additional time
 let numWine = 3; // number of wine
@@ -20,22 +26,22 @@ function setKeys(e) {
 
 function setChar() {
     // generate character after countdown
-    const charBox = document.getElementById("char-container");
-    const character = document.createElement("img");
-    character.className = "med-icon "; // there must be a space to separate the classes being added
-    character.className += "pulse";
-    character.setAttribute("id", "character");
-    character.src = "images/me.png";
-    charBox.append(character);
+    const character = document.getElementById("char-container");
+    const charImg = document.createElement("img");
+    charImg.className = "med-icon "; // there must be a space to separate the classes being added
+    charImg.className += "pulse";
+    // charImg.setAttribute("id", "character");
+    charImg.src = "images/me.png";
+    character.append(charImg);
 
     // position character
-    // character.style.gridColumn = "1/2";
-    // character.style.gridRow = "10/11";
+    character.style.gridColumn = "1";
+    character.style.gridRow = "7";
 }
 
 function jumpChar() {
     // character movement
-    const character = document.getElementById("character");
+    const character = document.getElementById("char-container");
 
 }
 
@@ -85,14 +91,14 @@ function serveWine() {
     wine.classList.remove("wine");
 }
 
-function addTime(numSheep,wines) {
+function addTime(numSheep) {
     // adds more time when necessary
     // let numSheep = 10;
-    // let numWine = 3; // number of wine at the start
-    if (numSheep() < 50 && wines > 0) {
-        serveWine();
-        startTimer(plusT); // adds 10 more seconds
-        debugger
+    if (numSheep() < 50) {
+        if (document.querySelector(".wine")) {
+            serveWine();
+            startTimer(plusT); // adds 10 more seconds
+        }
     } 
     else {
         winOrLose();
@@ -122,17 +128,16 @@ function winOrLose() {
 
 // ===== TIMER =====
 
+
+
 function startTimer(num) { 
     // starts 30s timer
-    let wines = 3;
     let timer = setInterval(() => {
         num--;
         document.getElementById("timer").textContent = num;
         if (num <= 0) {
             clearInterval(timer); // stops timer
-            wines --;
-            addTime(countSheep,wines);
-            debugger
+            addTime(countSheep);
         }
     }, 1000);
 }
@@ -146,7 +151,6 @@ function countDown() {
         if (sec <= 0) {
             clearInterval(counter); // stops the counter
             printDiv.innerHTML = ""; // clears the countdown container
-            // calls the ff functions after countdown:
             startTimer(startT); // duration of the game
             setChar();
         }
@@ -168,6 +172,4 @@ function initialize() {
 initialize();
 
 
-// countdown 321 before game starts
-// Add when there is time:
 // Add function for sleep props that can make character invincible for a few sec

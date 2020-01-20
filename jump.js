@@ -5,22 +5,20 @@
 
 
 // ===== STARTING VALUES =====
-let startT = 5; // duration of the game in seconds
-let plusT = 5; // additional time
-let numWine = 3; // number of wine
+let startT = 30; // duration of the game in seconds
+let plusT = 11; // additional time
 
 
 // ===== KEYBOARD =====
 
 function setKeys(e) {
-    // set keys to be used to move character
-    // spacebar for jumping
-    const pressedKey = e.code;
-    if (pressedKey === "Space") {
-        jumpChar();
+    // use up and down arrow keys to move character
+    const key = e.code;
+    if (key === "ArrowUp" || key === "ArrowDown") {
+        let direction = key === "ArrowDown" ? "down" : "up";
+        moveChar(direction);
     }
 }
-
 
 // ===== CHARACTER =====
 
@@ -36,15 +34,21 @@ function setChar() {
 
     // position character
     character.style.gridColumn = "1";
-    character.style.gridRow = "7";
+    character.style.gridRow = "4/5";
 }
 
-function jumpChar() {
+function moveChar(direction) {
     // character movement
     const character = document.getElementById("char-container");
+    let charPosition = Number(character.style.gridRow[0]);
+    if (direction === "up" && charPosition-1 > 0) {
+        character.style.gridRow = `${charPosition-1} / ${charPosition}`;
+    }
+    else if (direction === "down" && charPosition+1 < 8) {
+        character.style.gridRow = `${charPosition+1} / ${charPosition+2}`;
+    };
 
 }
-
 
 // ===== GENERATE SHEEP & OBSTACLES =====
 function generateItems() {

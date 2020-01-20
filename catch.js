@@ -57,9 +57,3 @@ function winOrLose() {
     // if score is in between 64%-82% (green), player wins
     // print message if one wins or loses
 }
-
-// function initialize() {
-
-// }
-
-// initialize();

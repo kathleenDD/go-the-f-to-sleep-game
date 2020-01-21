@@ -413,9 +413,19 @@ GAME WINDOW
     border-radius: 25px;
     background-color: #11242D;
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(7, 1fr);
+    /* display: grid; */
+    /* grid-template-columns: repeat(8, 1fr); */
+    /* grid-template-rows: repeat(7, 1fr); */
+}
+
+#character {
+    background-image: url(/images/me.png);
+    /* background-color: black; */
+    background-size: contain;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
 }
 
 /* 

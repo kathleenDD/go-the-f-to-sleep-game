@@ -5,8 +5,11 @@
 let startT = 30; // duration of the game in seconds
 let plusT = 6; // additional time
 
+const gameWindow = document.getElementById("game-window");
+const sheepElements = [];
+const obsElements = [];
+
 const keyState = {};
-// const character = document.getElementById("character");
 const player = {
   x: 0,
   y: 0,
@@ -14,12 +17,10 @@ const player = {
   direction: 180
 };
 
-// const obstacles= {
-//     x: 1300,
-// }
+// x (0-400)
+// y (0-340)
 
 window.onkeydown = function(e) {
-  this.console.log(keyState);
   keyState[e.code] = true;
 };
 
@@ -28,123 +29,96 @@ window.onkeyup = function(e) {
 };
 
 const draw = () => {
-  if (keyState["ArrowUp"]) jumpChar(player);
+  if (keyState["Space"]) jumpChar(player);
   if (keyState["ArrowRight"]) moveChar("right");
   if (keyState["ArrowLeft"]) moveChar("left");
   updateChar(player);
+  moveSheep(sheepElements);
+  moveObstacles(obsElements);
   requestAnimationFrame(draw);
-  // setSheep();
 };
 
+// randSheep();
+// moveSheep(sheepElements);
+
 // ===== KEYBOARD =====
-// function setKeys(e) {
-//   // set up and down arrow keys to move character
-//   const key = e.code;
-//   if (key === "ArrowRight") moveChar("right");
-//   if (key === "ArrowLeft") moveChar("left");
-//   if (key === "ArrowUp") jumpChar(player);
-// }
-
-// ===== CHARACTER =====
-function updateChar(player) {
-  // generate character, function called after countdown
-  // const player = {
-  //     x: 0,
-  //     y: 0,
-  //     isAirbourne: false,
-  //     direction: 180,
-  // }
-  const character = document.getElementById("character");
-  // character.className = "pulse";
-  // const charImg = document.createElement("img");
-  // charImg.className = "med-icon "; // there must be a space to separate the classes being added
-  // charImg.className += "pulse";
-  // charImg.src = "images/me.png";
-  // character.append(charImg);
-  // position character:
-  // character.style.gridColumn = "1";
-  // character.style.gridRow = "4/5";
-
-  character.style.transform = `rotateY(${player.direction}deg) translate(${
-    player.direction === 0 ? player.x : -player.x
-  }px, ${-player.y}px)`;
-
-//   console.log(character);
-//   console.log(player.direction);
-}
-
-function moveChar(direction) {
-  // character movement, up or down
-//   console.log(direction);
-  if (direction === "right" && player.x < 370) {
-    player.x += 10;
-    player.direction = 180;
-    return;
-  }
-  else if (direction === "left" && player.x > 0) {
-    player.x -= 10;
-    player.direction = 0;
-  }
-
-//   console.log(player.x);
-  // const character = document.getElementById("character");
-  // let charPosition = Number(character.style.gridRow[0]);
-  // if (direction === "up" && charPosition-1 > 0) {
-  //     character.style.gridRow = `${charPosition-1} / ${charPosition}`;
-  // }
-  // else if (direction === "down" && charPosition+1 < 8) {
-  //     character.style.gridRow = `${charPosition+1} / ${charPosition+2}`;
-  // };
-}
-
-function fallChar(player) {
-  let intervalId = setInterval(() => {
-    if (player.y === 0) {
-      player.isAirbourne = false;
-      clearInterval(intervalId);
-      return;
-    }
-    player.y -= 5;
-  }, 15);
-}
-
-function jumpChar(player) {
-  let limit = 0;
-  if (!player.isAirbourne) {
-    player.isAirbourne = true;
-    let intervalId = setInterval(() => {
-      if (limit > 30) {
-        fallChar(player);
-        clearInterval(intervalId);
-      }
-      player.y += 10;
-      limit++;
-    }, 15);
-  }
-}
 
 // ===== GENERATE SHEEP & OBSTACLES =====
-function generateItems() {}
+function setItems() {
+  setInterval(() => {
+    createSheep();
+  }, Math.floor(Math.random() * (3000 - 2000) + 2000));
 
-// ===== FLOATING SHEEP =====
-function setSheep() {
-  // generate floating sheep
-  const grid = document.getElementById("game-window");
-  const sheep = document.createElement("span");
-  const sheepImg = document.createElement("img");
-  sheepImg.className = "icon";
-  sheepImg.src = "images/sheep.png";
-  sheep.append(sheepImg);
-  // position sheep
-  const gridStart = Math.floor(Math.random() * 8);
-  sheep.style.gridRow = `${gridStart} / ${gridStart + 1}`;
-  sheep.style.gridColumn = "8";
-  grid.appendChild(sheep);
+  setInterval(() => {
+    createObstacles();
+  }, Math.floor(Math.random() * (5000 - 1000) + 1000));
 }
 
+function createSheep() {
+  // generates sheep one by one
+  const gameWindow = document.getElementById("game-window");
+  const newSheep = document.createElement("div");
+  newSheep.className = "sheep";
+  newSheep.style.backgroundImage = "url(/../images/sheep.png)";
+  const xy = {};
+  const x = 400;
+  const y = Math.floor(Math.random() * 340);
+  xy.x = x;
+  xy.y = y;
+  newSheep.style.transform = `translate(${x}px,${y}px)`;
+  xy.element = newSheep;
+  sheepElements.push(xy);
+  gameWindow.appendChild(newSheep);
+}
+
+function moveSheep(arr) {
+  // exactly the same as moveSheep()
+  for (let i = 0; i < arr.length; i += 1) {
+    let el = arr[i].element;
+    el.style.transform = `translate(${arr[i].x}px,${arr[i].y}px)`;
+    arr[i].x -= Math.floor(Math.random() * 4);
+    if (arr[i].x < -200) {
+      arr.shift();
+    }
+  }
+}
+
+// x (0-400)
+// y (0-340)
+
 // ===== OBSTACLES =====
-function setObstacles() {
-  // position obstacles
+function createObstacles() {
+  const gameWindow = document.getElementById("game-window");
+  const obstacle = document.createElement("div");
+  obstacle.className = "obstacles";
+  const obsImages = [
+    "url(/../images/robot.png)",
+    "url(/../images/gamepad.png",
+    "/images/ice-cream.png"
+  ];
+  let randNum = Math.floor(Math.random() * obsImages.length);
+  obstacle.style.backgroundImage = obsImages[randNum];
+  const xy = {};
+  const x = 400;
+  const y = Math.floor(Math.random() * 340);
+  xy.x = x;
+  xy.y = y;
+  obstacle.style.transform = `translate(${x}px,${y}px)`;
+  xy.element = obstacle;
+  obsElements.push(xy);
+  gameWindow.appendChild(obstacle);
+}
+
+function moveObstacles(arr) {
+  // move obstacles
+  for (let i = 0; i < arr.length; i += 1) {
+    let el = arr[i].element;
+    el.style.transform = `translate(${arr[i].x}px,${arr[i].y}px)`;
+    arr[i].x -= Math.floor(Math.random() * 4);
+    if (arr[i].x < -200) {
+      arr.shift();
+    }
+  }
 }
 
 // ===== SHEEP COUNTER =====
@@ -158,6 +132,69 @@ function countSheep() {
   // increase number whenever character collides with sheep
   // must return a number
   return 10; // test
+}
+
+// ===== REACTIONS PER COLLISION=====
+function changeFace() {
+  // changes face at the bottom
+}
+
+function printMsg() {
+  // prints message per each collision
+}
+
+// ===== WIN OR LOSE =====
+function winOrLose() {
+  // pop up for when player won or lost
+}
+
+// ===== CHARACTER =====
+function updateChar(player) {
+  const character = document.getElementById("character");
+  character.style.backgroundImage = "url(/images/me.png)";
+
+  character.style.transform = `rotateY(${player.direction}deg) translate(${
+    player.direction === 0 ? player.x : -player.x
+  }px, ${-player.y}px)`;
+}
+
+function moveChar(direction) {
+  // character movement, up or down
+  if (direction === "right" && player.x < 370) {
+    player.x += 3;
+    player.direction = 180;
+    return;
+  }
+  if (direction === "left" && player.x > 0) {
+    player.x -= 3;
+    player.direction = 0;
+  }
+}
+
+function fallChar(player) {
+  let intervalId = setInterval(() => {
+    if (player.y === 0) {
+      player.isAirbourne = false;
+      clearInterval(intervalId);
+      return;
+    }
+    player.y -= 12;
+  }, 15);
+}
+
+function jumpChar(player) {
+  let limit = 0;
+  if (!player.isAirbourne) {
+    player.isAirbourne = true;
+    let intervalId = setInterval(() => {
+      if (limit > 20) {
+        fallChar(player);
+        clearInterval(intervalId);
+      }
+      player.y += 12;
+      limit++;
+    }, 25);
+  }
 }
 
 // ===== WINE =====
@@ -181,20 +218,6 @@ function addTime(numSheep) {
   }
 }
 
-// ===== REACTIONS PER COLLISION=====
-function changeFace() {
-  // changes face at the bottom
-}
-
-function printMsg() {
-  // prints message per each collision
-}
-
-// ===== WIN OR LOSE =====
-function winOrLose() {
-  // pop up for when player won or lost
-}
-
 // ===== TIMER =====
 function startTimer(num) {
   // starts 30s timer
@@ -205,7 +228,7 @@ function startTimer(num) {
       clearInterval(timer); // stops timer
       addTime(countSheep);
     }
-  }, 1000);
+  }, 2500);
 }
 
 // ===== COUNTDOWN on window load =====
@@ -218,28 +241,13 @@ function countDown() {
     if (sec <= 0) {
       clearInterval(counter); // stops the counter
       printDiv.innerHTML = ""; // clears the countdown container
-    //   initialize();
-      startTimer(startT); 
+      //   initialize();
+      startTimer(startT);
       requestAnimationFrame(draw);
+      setItems();
     }
   }, 1000);
 }
-
-// ===== FUNCTIONS TO BE CALLED AFTER countdown =====
-function initialize() {
-  // if (keyState["ArrowUp"]) jump(player);
-  // if (keyState["ArrowRight"]) moveChar("right");
-  // if (keyState["ArrowLeft"]) moveChar("left");
-  // window.onkeydown = setKeys;
-  // window.onkeyup = fallChar;
-  startTimer(startT); // duration of the game
-  requestAnimationFrame(draw);
-  // setChar(character,player);
-  // setSheep();
-  // requestAnimationFrame(initialize);
-}
-
-// requestAnimationFrame(initialize);
 
 window.onload = countDown;
 

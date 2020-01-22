@@ -1,14 +1,12 @@
 // Don't forget to delete starting values and set the
 // real values inside the function
+// add sounds - wine, sheep collected, obstacle touched
 
 // ===== STARTING VALUES =====
 let startT = 30; // duration of the game in seconds
-let plusT = 6; // additional time
+let plusT = 10; // additional time
 
-const gameWindow = document.getElementById("game-window");
-const sheepElements = [];
-const obsElements = [];
-
+// const gameWindow = document.getElementById("game-window");
 const keyState = {};
 const player = {
   x: 0,
@@ -16,6 +14,10 @@ const player = {
   isAirbourne: false,
   direction: 180
 };
+const sheepElements = [];
+const obsElements = [];
+const sheepCollected = [];
+
 
 // x (0-400)
 // y (0-340)
@@ -35,103 +37,17 @@ const draw = () => {
   updateChar(player);
   moveSheep(sheepElements);
   moveObstacles(obsElements);
+  sheepCollision(sheepElements);
+  obsCollision(obsElements);
+  countSheep();
   requestAnimationFrame(draw);
 };
 
-// randSheep();
-// moveSheep(sheepElements);
-
-// ===== KEYBOARD =====
-
-// ===== GENERATE SHEEP & OBSTACLES =====
-function setItems() {
-  setInterval(() => {
-    createSheep();
-  }, Math.floor(Math.random() * (3000 - 2000) + 2000));
-
-  setInterval(() => {
-    createObstacles();
-  }, Math.floor(Math.random() * (5000 - 1000) + 1000));
-}
-
-function createSheep() {
-  // generates sheep one by one
-  const gameWindow = document.getElementById("game-window");
-  const newSheep = document.createElement("div");
-  newSheep.className = "sheep";
-  newSheep.style.backgroundImage = "url(/../images/sheep.png)";
-  const xy = {};
-  const x = 400;
-  const y = Math.floor(Math.random() * 340);
-  xy.x = x;
-  xy.y = y;
-  newSheep.style.transform = `translate(${x}px,${y}px)`;
-  xy.element = newSheep;
-  sheepElements.push(xy);
-  gameWindow.appendChild(newSheep);
-}
-
-function moveSheep(arr) {
-  // exactly the same as moveSheep()
-  for (let i = 0; i < arr.length; i += 1) {
-    let el = arr[i].element;
-    el.style.transform = `translate(${arr[i].x}px,${arr[i].y}px)`;
-    arr[i].x -= Math.floor(Math.random() * 4);
-    if (arr[i].x < -200) {
-      arr.shift();
-    }
-  }
-}
-
-// x (0-400)
-// y (0-340)
-
-// ===== OBSTACLES =====
-function createObstacles() {
-  const gameWindow = document.getElementById("game-window");
-  const obstacle = document.createElement("div");
-  obstacle.className = "obstacles";
-  const obsImages = [
-    "url(/../images/robot.png)",
-    "url(/../images/gamepad.png",
-    "/images/ice-cream.png"
-  ];
-  let randNum = Math.floor(Math.random() * obsImages.length);
-  obstacle.style.backgroundImage = obsImages[randNum];
-  const xy = {};
-  const x = 400;
-  const y = Math.floor(Math.random() * 340);
-  xy.x = x;
-  xy.y = y;
-  obstacle.style.transform = `translate(${x}px,${y}px)`;
-  xy.element = obstacle;
-  obsElements.push(xy);
-  gameWindow.appendChild(obstacle);
-}
-
-function moveObstacles(arr) {
-  // move obstacles
-  for (let i = 0; i < arr.length; i += 1) {
-    let el = arr[i].element;
-    el.style.transform = `translate(${arr[i].x}px,${arr[i].y}px)`;
-    arr[i].x -= Math.floor(Math.random() * 4);
-    if (arr[i].x < -200) {
-      arr.shift();
-    }
-  }
-}
-
 // ===== SHEEP COUNTER =====
-function setCounter() {
-  // set HTML sheep counter
-  let numSpan = document.getElementById("counter");
-  numSpan.textContent = `${countSheep()}`;
-}
 
 function countSheep() {
-  // increase number whenever character collides with sheep
-  // must return a number
-  return 10; // test
+  const numSheep = document.getElementById("counter");
+  numSheep.textContent = sheepCollected.length;
 }
 
 // ===== REACTIONS PER COLLISION=====
@@ -144,8 +60,17 @@ function printMsg() {
 }
 
 // ===== WIN OR LOSE =====
-function winOrLose() {
-  // pop up for when player won or lost
+function endGame() {
+  //   // pop up for when player won or lost
+    const endMsg = document.querySelector("modal-content");
+    msg = document.createElement("p");
+    if (sheepCollected.length >= 50) {
+        msg.textContent = "You win! Don't you wish it's this easy in reality??";
+    } else {
+        msg.textContent = "You lose! It's okay, still not as bad as real life."
+    }
+    endMsg.append(msg);
+    document.querySelector("modal").style.visibility = "visible";
 }
 
 // ===== CHARACTER =====
@@ -187,7 +112,7 @@ function jumpChar(player) {
   if (!player.isAirbourne) {
     player.isAirbourne = true;
     let intervalId = setInterval(() => {
-      if (limit > 20) {
+      if (limit > 25) {
         fallChar(player);
         clearInterval(intervalId);
       }
@@ -197,6 +122,121 @@ function jumpChar(player) {
   }
 }
 
+// ===== GENERATE SHEEP & OBSTACLES =====
+function setItems() {
+  // generate sheep
+  setInterval(() => {
+    createSheep();
+  }, Math.floor(Math.random() * (3000 - 1000) + 1000));
+  // generate obstacles
+  setInterval(() => {
+    createObstacles();
+  }, Math.floor(Math.random() * (5000 - 2000) + 2000));
+}
+
+function createSheep() {
+  const gameWindow = document.getElementById("game-window");
+  const newSheep = document.createElement("div");
+  newSheep.className = "sheep";
+  newSheep.style.backgroundImage = "url(/../images/sheep.png)";
+  const xy = {};
+  const x = 400;
+  const y = Math.floor(Math.random() * 200);
+  xy.x = x;
+  xy.y = y;
+  newSheep.style.transform = `translate(${x}px,${y}px)`;
+  xy.element = newSheep;
+  sheepElements.push(xy);
+  gameWindow.appendChild(newSheep);
+}
+
+function moveSheep(arr) {
+  // array to be passed is sheepElements
+  for (let i = 0; i < arr.length; i += 1) {
+    let el = arr[i].element;
+    el.style.transform = `translate(${arr[i].x}px,${arr[i].y}px)`;
+    arr[i].x -= Math.floor(Math.random() * 4);
+    if (arr[i].x < -500) {
+      arr.shift();
+    }
+  }
+}
+
+function sheepCollision(arr) {
+  const character = document.getElementById("character");
+  const rect1 = character.getBoundingClientRect();
+
+  for (let i = 0; i < arr.length; i++) {
+    let sheepEl = arr[i].element;
+    let rect2 = sheepEl.getBoundingClientRect();
+    if (
+      rect1.x < rect2.x + rect2.width &&
+      rect1.x + rect1.width > rect2.x &&
+      rect1.y < rect2.y + rect2.height &&
+      rect1.y + rect1.height > rect2.y
+    ) {
+      sheepEl.style.backgroundImage = ""; // to clear the image of sheep once collected
+      sheepCollected.push(arr.splice(i, 1));
+    }
+  }
+}
+
+// ===== OBSTACLES =====
+function createObstacles() {
+  const gameWindow = document.getElementById("game-window");
+  const obstacle = document.createElement("div");
+  obstacle.className = "obstacles";
+  // create random obstacles
+  const obsImages = [
+    "url(/../images/robot.png)",
+    "url(/../images/gamepad.png",
+    "/images/ice-cream.png"
+  ];
+  let randNum = Math.floor(Math.random() * obsImages.length);
+  obstacle.style.backgroundImage = obsImages[randNum];
+  const xy = {};
+  const x = 400;
+  const y = Math.floor(Math.random() * 300);
+  xy.x = x;
+  xy.y = y;
+  obstacle.style.transform = `translate(${x}px,${y}px)`;
+  xy.element = obstacle;
+  obsElements.push(xy);
+  gameWindow.appendChild(obstacle);
+}
+
+function moveObstacles(arr) {
+  // arr to be passed is obsElements
+  for (let i = 0; i < arr.length; i += 1) {
+    let el = arr[i].element;
+    el.style.transform = `translate(${arr[i].x}px,${arr[i].y}px)`;
+    arr[i].x -= Math.floor(Math.random() * 4);
+    if (arr[i].x < -500) {
+      arr.shift();
+    }
+  }
+}
+
+function obsCollision(arr) {
+    const character = document.getElementById("character");
+    const rect1 = character.getBoundingClientRect();
+  
+    for (let i = 0; i < arr.length; i++) {
+      let obsEl = arr[i].element;
+      let rect2 = obsEl.getBoundingClientRect();
+      if (
+        rect1.x < rect2.x + rect2.width &&
+        rect1.x + rect1.width > rect2.x &&
+        rect1.y < rect2.y + rect2.height &&
+        rect1.y + rect1.height > rect2.y
+      ) {
+        
+        obsEl.style.backgroundImage = ""; // to clear the image of sheep once collected
+        arr.splice(i, 1)
+      }
+    }
+  }
+
 // ===== WINE =====
 function serveWine() {
   // changes color when more time is needed
@@ -205,16 +245,16 @@ function serveWine() {
   wine.classList.remove("wine");
 }
 
-function addTime(numSheep) {
+function addTime() {
   // adds more time when necessary
   // let numSheep = 10;
-  if (numSheep() < 50) {
+  if (sheepCollected.length < 50) {
     if (document.querySelector(".wine")) {
       serveWine();
       startTimer(plusT); // adds 10 more seconds
     }
   } else {
-    winOrLose();
+    endGame();
   }
 }
 
@@ -228,7 +268,7 @@ function startTimer(num) {
       clearInterval(timer); // stops timer
       addTime(countSheep);
     }
-  }, 2500);
+  }, 1000);
 }
 
 // ===== COUNTDOWN on window load =====
@@ -241,7 +281,6 @@ function countDown() {
     if (sec <= 0) {
       clearInterval(counter); // stops the counter
       printDiv.innerHTML = ""; // clears the countdown container
-      //   initialize();
       startTimer(startT);
       requestAnimationFrame(draw);
       setItems();
@@ -252,6 +291,7 @@ function countDown() {
 window.onload = countDown;
 
 // POSSIBLE ADDITIONS:
+// space and double space for jump and double jump
 // Choose character
 // Choose game mode
 // Add function for sleep props that can make character invincible for a few sec

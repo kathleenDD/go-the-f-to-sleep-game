@@ -3,7 +3,8 @@ Ironhack Project #1 : The Game<br>
 <b>By Kathleen Domingo <i>(with the help of the Ironhack team and classmates)</i></b>
 
 <h4>Go The F* To Sleep</h4> is a fun (I hope so) and simple game (with hundred lines of code)
-dedicated to parents all around the world who have struggled / still struggling to make their child/ren sleep.<br>
+dedicated to parents all around the world who have struggled / still struggling to make their child/ren sleep.<br><br>
+
 If you are not a parent yet, then you'll get a glimpse of how it is by playing this game. :P <br><br>
 
 Here, all you need to do is collect 50 sheep in 30 seconds. And if that is not enough, you'll get up to three glasses of wine.

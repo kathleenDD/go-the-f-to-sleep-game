@@ -40,7 +40,10 @@ function changeFace() {
 
 function reactMsg() {
   // prints message per each collision
-  let printBox = document.getElementById("print-container");
+  let printBox = document.getElementById("msg-container");
+  let message = document.createElement("p");
+  message.className = "message"
+
 }
 
 // ===== END GAME: WIN OR LOSE =====
@@ -80,6 +83,7 @@ function endGame() {
   clearInterval(sheepIntervalId);
   clearInterval(obsIntervalId);
   window.cancelAnimationFrame(animationId);
+  debugger
 }
 
 // ===== END GAME MODAL =====
@@ -96,7 +100,6 @@ function toggleModal() {
 function updateChar(player) {
   const character = document.getElementById("character");
   character.style.backgroundImage = "url(/images/me.png)";
-
   character.style.transform = `rotateY(${player.direction}deg) translate(${
     player.direction === 0 ? player.x : -player.x
   }px, ${-player.y}px)`;
@@ -200,8 +203,8 @@ function createObstacles() {
   // create random obstacles
   const obsImages = [
     "url(/../images/robot.png)",
-    "url(/../images/gamepad.png",
-    "/images/ice-cream.png"
+    "url(/../images/gamepad.png)",
+    "url(/images/ice-cream.png)"
   ];
   let randNum = Math.floor(Math.random() * obsImages.length);
   obstacle.style.backgroundImage = obsImages[randNum];

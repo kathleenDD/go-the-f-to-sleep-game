@@ -497,7 +497,7 @@ img.btm-face {
     justify-content: center;
 }
 
-#message {
+.message {
     font-size: 1.5em;
 }
 

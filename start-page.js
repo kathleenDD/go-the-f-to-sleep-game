@@ -4,7 +4,7 @@ lullabySound.volume = 0.3;
 // lullabySound.play();
 
 // START GAME BUTTON
-let start = document.getElementById("btn-start");
+const start = document.getElementById("btn-start");
 
 start.onclick = () => {
     location.href = "/game.html";

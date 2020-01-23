@@ -5,8 +5,7 @@
 let startT = 30; // duration of the game in seconds
 let plusT = 11; // additional time
 
-
-// ===== GLOBAL VALUES =====
+// ===== GLOBAL =====
 // I am fully aware that this is not good practice
 
 const giggleSound = new Audio("/audio/giggle.mp3");
@@ -42,41 +41,53 @@ function changeFace() {
   // reactFace.src =
 }
 
-function printMsg() {
+function reactMsg() {
   // prints message per each collision
   let printBox = document.getElementById("print-container");
 }
 
 // ===== END GAME: WIN OR LOSE =====
 
-function winMsg() {
-  const endMsg = document.querySelector(".modal-content");
+function printMsg() {
+  // modal
+  let modal = document.querySelector(".modal");
+  const modalContent = document.querySelector(".modal-content");
   let msg = document.createElement("p");
-  msg.textContent = "You win! Don't you wish it's this easy in reality??";
-  endMsg.appendChild(msg);
-  console.log(endMsg);
-  //   document.querySelector(".modal").style.visibility = "visible";
-}
 
-function LoseMsg() {
-  const endMsg = document.querySelector(".modal-content");
-  let msg = document.createElement("p");
-  msg.textContent = "You lose! It's okay, still not as bad as in real life.";
-  endMsg.appendChild(msg);
-  console.log(endMsg);
-  //   document.querySelector(".modal").style.visibility = "visible";
+  if (sheepCollected.length >= 50) {
+    msg.innerHTML = `<p class="text-em">You Win!</p><br><br>`;
+    msg.innerHTML += `Don't you wish it's this easy in reality??<br><br>`;
+  } else {
+    msg.innerHTML = `<p class="text-em">You Lose!</p><br><br>`;
+    msg.innerHTML += `But it's okay, it's still not as bad as in real life.<br><br>`;
+  }
+
+  msg.innerHTML +=
+  `<button class="btn hvr-pulse-grow" id="btn-start"
+  onclick="window.location.reload();">TRY AGAIN</button>
+  <button class="btn hvr-pulse-grow" id="btn-home" href="/index.html">HOME</button>`;
+
+  modalContent.append(msg);
+  modal.classList.toggle("show-modal");
 }
 
 function endGame() {
   // pop up for when player won or lost
-  if (sheepCollected.length >= 50) {
-    winMsg();
-  } else {
-    LoseMsg();
-  }
+  printMsg();
+  sheepElements.length = 0;
+  obsElements.length = 0;
   clearInterval(sheepIntervalId);
   clearInterval(obsIntervalId);
   window.cancelAnimationFrame(animationId);
+}
+
+// ===== END GAME MODAL =====
+
+let modal = document.querySelector(".modal");
+let trigger = document.querySelector(".trigger");
+
+function toggleModal() {
+  modalBox.classList.toggle("show-modal");
 }
 
 // ===== CHARACTER =====
@@ -135,7 +146,7 @@ function setItems() {
   // generate sheep
   sheepIntervalId = setInterval(() => {
     createSheep();
-  }, Math.floor(Math.random() * (3000 - 1000) + 1000));
+  }, Math.floor(Math.random() * (3000 - 500) + 500));
   // generate obstacles
   obsIntervalId = setInterval(() => {
     createObstacles();
@@ -151,7 +162,7 @@ function createSheep() {
   newSheep.style.backgroundImage = "url(/../images/sheep.png)";
   const xy = {}; // where coordinates and current DOM will be saved which will then be pushed to the array
   const x = 400;
-  const y = Math.floor(Math.random() * 200);
+  const y = Math.floor(Math.random() * 200); // could be any number???
   xy.x = x;
   xy.y = y;
   newSheep.style.transform = `translate(${x}px,${y}px)`;
@@ -165,7 +176,7 @@ function moveSheep(arr) {
   for (let i = 0; i < arr.length; i += 1) {
     let el = arr[i].element;
     el.style.transform = `translate(${arr[i].x}px,${arr[i].y}px)`;
-    arr[i].x -= Math.floor(Math.random() * 4);
+    arr[i].x -= Math.floor(Math.random() * 5);
     if (arr[i].x < -500) {
       arr.shift();
     }
@@ -254,7 +265,7 @@ function obsCollision(arr) {
       // DO SOMETHING FOR OBSTACLES !!!
       giggleSound.play();
       arr.splice(i, 1);
-      obsEl.style.backgroundImage = "";
+    //   character.style.animation = "move";
     }
   }
 }
@@ -315,6 +326,7 @@ function countDown() {
 // ===== "Main" Functions =====
 
 function initialize() {
+
   startTimer(startT);
   animationId = requestAnimationFrame(main);
   setItems();

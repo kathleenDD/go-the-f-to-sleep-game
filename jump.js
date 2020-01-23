@@ -15,8 +15,6 @@ mainSong.volume = 0.2;
 mainSong.play();
 
 var animationId;
-var sheepIntervalId = null;
-var obsIntervalId = null;
 const keyState = {};
 const player = {
   x: 0,
@@ -25,8 +23,11 @@ const player = {
   direction: 180
 };
 const sheepElements = [];
-const obsElements = [];
 const sheepCollected = [];
+var sheepIntervalId = null;
+var obsIsTouched = false;
+const obsElements = [];
+var obsIntervalId = null;
 
 // ===== REACTIONS PER COLLISION=====
 
@@ -263,9 +264,9 @@ function obsCollision(arr) {
       rect1.y + rect1.height > rect2.y
     ) {
       // DO SOMETHING FOR OBSTACLES !!!
-      // giggleSound.play();
-      character.style.animation = "move 2s ease-in"
+      giggleSound.play();
       obsEl.style.backgroundImage = "";
+      if (obsIsTouched === false) obsIsTouched = true;
       arr.splice(i, 1);
     }
   }
@@ -333,7 +334,19 @@ function initialize() {
   setItems();
 }
 
+// let tietime=0;
+// setInterval(() =>  tietime++ ,1000)
+
 const main = () => {
+  if(obsIsTouched === true) {
+    obsIsTouched = false;
+    setTimeout(() => {
+      requestAnimationFrame(main)
+      // tietime = 0;
+    },2000)
+    return;
+  }
+
   if (keyState["Space"]) jumpChar(player);
   if (keyState["ArrowRight"]) moveChar("right");
   if (keyState["ArrowLeft"]) moveChar("left");

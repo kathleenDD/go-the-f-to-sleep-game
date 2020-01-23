@@ -1,9 +1,5 @@
-// Don't forget to delete starting values and set the
-// real values inside the function
 // add sounds - wine, sheep collected, obstacle touched
 
-let startT = 30; // duration of the game in seconds
-let plusT = 11; // additional time
 
 // ===== GLOBAL =====
 // I am fully aware that this is not good practice
@@ -77,9 +73,9 @@ function printMsg() {
 
 function endGame() {
   // pop up for when player won or lost
+  const gameWindow = document.getElementById("game-window");
   printMsg();
-  sheepElements.length = 0;
-  obsElements.length = 0;
+  gameWindow.innerHTML = "";
   clearInterval(sheepIntervalId);
   clearInterval(obsIntervalId);
   window.cancelAnimationFrame(animationId);
@@ -268,6 +264,7 @@ function obsCollision(arr) {
     ) {
       // DO SOMETHING FOR OBSTACLES !!!
       giggleSound.play();
+      obsEl.style.backgroundImage = "";
       arr.splice(i, 1);
     //   character.style.animation = "move";
     }
@@ -288,7 +285,7 @@ function addTime() {
   if (sheepCollected.length < 50) {
     if (document.querySelector(".wine")) {
       serveWine();
-      startTimer(plusT); // adds 10 more seconds
+      startTimer(11); // adds 10 more seconds
     } else {
       endGame();
     }
@@ -331,7 +328,7 @@ function countDown() {
 
 function initialize() {
 
-  startTimer(startT);
+  startTimer(30);
   animationId = requestAnimationFrame(main);
   setItems();
 }

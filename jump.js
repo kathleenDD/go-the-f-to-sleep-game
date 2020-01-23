@@ -315,15 +315,6 @@ function endGame() {
   window.cancelAnimationFrame(animationId);
 }
 
-// ===== END GAME MODAL =====
-
-let modal = document.querySelector(".modal");
-let trigger = document.querySelector(".trigger");
-
-function toggleModal() {
-  modalBox.classList.toggle("show-modal");
-}
-
 // ===== TIMER =====
 
 function startTimer(num) {
@@ -363,15 +354,12 @@ function initialize() {
   setItems();
 }
 
-// let tietime=0;
-// setInterval(() =>  tietime++ ,1000)
 
 const main = () => {
   if(obsIsTouched === true) {
     obsIsTouched = false;
     setTimeout(() => {
-      requestAnimationFrame(main)
-      // tietime = 0;
+      requestAnimationFrame(main);
     },2000)
     return;
   }

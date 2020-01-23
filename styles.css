@@ -429,6 +429,10 @@ GAME WINDOW
     bottom: 0;
 }
 
+.move {
+    animation: move 2s;
+}
+
 @keyframes move {
     20%, 100% {
       transform: translate(200px, 0);

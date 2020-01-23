@@ -7,7 +7,7 @@ lullabySound.volume = 0.3;
 const start = document.getElementById("btn-start");
 
 start.onclick = () => {
-    location.href = "/game.html";
+    location.href = "./game.html";
 }
 
 // CHOOSE GAME MODE BUTTON

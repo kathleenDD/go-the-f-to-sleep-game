@@ -34,7 +34,7 @@ var obsIntervalId = null;
 
 function updateChar(player) {
   const character = document.getElementById("character");
-  character.style.backgroundImage = "url(./images/me.png)";
+  character.style.backgroundImage = "url(../images/me.png)";
   character.style.transform = `rotateY(${player.direction}deg) translate(${
     player.direction === 0 ? player.x : -player.x
   }px, ${-player.y}px)`;

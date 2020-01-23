@@ -49,26 +49,30 @@ function reactMsg() {
 // ===== END GAME: WIN OR LOSE =====
 
 function printMsg() {
-  // modal
-  let modal = document.querySelector(".modal");
-  const modalContent = document.querySelector(".modal-content");
-  let msg = document.createElement("p");
-
-  if (sheepCollected.length >= 50) {
-    msg.innerHTML = `<p class="text-em">You Win!</p><br><br>`;
-    msg.innerHTML += `Don't you wish it's this easy in reality??<br><br>`;
-  } else {
-    msg.innerHTML = `<p class="text-em">You Lose!</p><br><br>`;
-    msg.innerHTML += `But it's okay, it's still not as bad as in real life.<br><br>`;
-  }
-
-  msg.innerHTML +=
-  `<button class="btn hvr-pulse-grow" id="btn-start"
-  onclick="window.location.reload();">TRY AGAIN</button>
-  <button class="btn hvr-pulse-grow" id="btn-home" href="/index.html">HOME</button>`;
-
-  modalContent.append(msg);
-  modal.classList.toggle("show-modal");
+    // modal
+    let modal = document.querySelector(".modal");
+    const modalContent = document.querySelector(".modal-content");
+    let msg = document.createElement("p");
+  
+    // I could have done better code than this:
+    if (sheep.collected.length >= 50) {
+      msg.innerHTML = `<p class="text-em">You Win!</p><br>`;
+      msg.innerHTML += `<img class ="lrg-icon pulse" src="/animojis/dodo1.png"><br><br>`
+      msg.innerHTML += `Don't you wish it's this easy in reality??<br><br>`;
+    } else {
+      msg.innerHTML = `<p class="text-em">You Lose!</p><br>`;
+      msg.innerHTML += `<img class="lrg-icon pulse" src="/animojis/hyper2.png"><br><br>`
+      msg.innerHTML += `But it's okay, it's still not as bad as in real life.<br><br>`;
+    }
+  
+    msg.innerHTML +=
+    `<button class="btn hvr-pulse-grow" id="btn-start"
+    onclick="window.location.reload();">TRY AGAIN</button>
+    <button class="btn hvr-pulse-grow" id="btn-home"
+    onclick="location.href='/index.html'">HOME</button>`;
+  
+    modalContent.append(msg);
+    modal.classList.toggle("show-modal");
 }
 
 function endGame() {

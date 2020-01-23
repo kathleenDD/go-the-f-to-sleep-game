@@ -31,19 +31,43 @@ var obsIntervalId = null;
 
 // ===== REACTIONS PER COLLISION=====
 
-function changeFace() {
-  // changes face at the bottom
-  let reactFace = document.querySelector(".btm-face");
-  //   if (sheepCollision,)
-  // reactFace.src =
-}
-
-function reactMsg() {
+function winReaction() {
   // prints message per each collision
+  let reactFace = document.querySelector(".btm-face");
   let printBox = document.getElementById("msg-container");
   let message = document.createElement("p");
-  message.className = "message"
 
+  const winImages = [
+    "/../animojis/serious1.png",
+    "/../animojis/sleepy2.png",
+    "/../animojis/sleepy1.png",
+    "/animojis/serious2.png"
+  ];
+  let randNum = Math.floor(Math.random() * winImages.length);
+  reactFace.src = winImages[randNum];
+  // message.className = "message";
+  // message.innerHTML = "Dodo time";
+  // printBox.appendChild(message);
+  // printBox.style.visibility = visible;
+}
+
+function loseReaction() {
+  let reactFace = document.querySelector(".btm-face");
+  let printBox = document.getElementById("msg-container");
+  let message = document.createElement("p");
+  const loseImages = [
+    "/../animojis/happy2.png",
+    "/../animojis/hyper1.png",
+    "/../animojis/hyper2.png",
+    "/../animojis/happy3.png"
+  ];
+  let randNum = Math.floor(Math.random() * loseImages.length);
+  reactFace.src = loseImages[randNum];
+  // message.className = "message";
+  // message.innerHTML = "Weeee!!!!";
+  // printBox.appendChild(message);
+  // printBox.style.visibility = visible;
+  
 }
 
 // ===== END GAME: WIN OR LOSE =====
@@ -83,7 +107,6 @@ function endGame() {
   clearInterval(sheepIntervalId);
   clearInterval(obsIntervalId);
   window.cancelAnimationFrame(animationId);
-  debugger
 }
 
 // ===== END GAME MODAL =====
@@ -246,6 +269,7 @@ function sheepCollision(arr) {
       rect1.y < rect2.y + rect2.height &&
       rect1.y + rect1.height > rect2.y
     ) {
+      winReaction();
       collectSound.play();
       sheepEl.style.backgroundImage = ""; // to clear the image of sheep once collected
       sheepCollected.push(arr.splice(i, 1)); // remove from array and push to collected array
@@ -267,6 +291,7 @@ function obsCollision(arr) {
       rect1.y + rect1.height > rect2.y
     ) {
       // DO SOMETHING FOR OBSTACLES !!!
+      loseReaction();
       giggleSound.play();
       obsEl.style.backgroundImage = "";
       if (obsIsTouched === false) obsIsTouched = true;

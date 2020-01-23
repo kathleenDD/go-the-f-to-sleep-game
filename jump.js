@@ -51,7 +51,7 @@ function printMsg() {
     let msg = document.createElement("p");
   
     // I could have done better code than this:
-    if (sheep.collected.length >= 50) {
+    if (sheepCollected.length >= 50) {
       msg.innerHTML = `<p class="text-em">You Win!</p><br>`;
       msg.innerHTML += `<img class ="lrg-icon pulse" src="/animojis/dodo1.png"><br><br>`
       msg.innerHTML += `Don't you wish it's this easy in reality??<br><br>`;
@@ -263,10 +263,10 @@ function obsCollision(arr) {
       rect1.y + rect1.height > rect2.y
     ) {
       // DO SOMETHING FOR OBSTACLES !!!
-      giggleSound.play();
+      // giggleSound.play();
+      character.style.animation = "move 2s ease-in"
       obsEl.style.backgroundImage = "";
       arr.splice(i, 1);
-    //   character.style.animation = "move";
     }
   }
 }

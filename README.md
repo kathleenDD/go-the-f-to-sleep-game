@@ -12,7 +12,7 @@ Each glass gives you additional 10 seconds. <br>
 Easy right? But of course, to frustrate YOU the player, I added some obstacles that
 could slow you down by 2 seconds when "touched". So avoid the toys and sweets that could hype up the child!<br><br>
 
-Enjoy!<br>,br>
+Enjoy!<br><br>
 
 ** Most, if not all icons I used (sheep, toys, wine, clock, etc.) are downloaded from flaticon.com, created by Freepik.
 

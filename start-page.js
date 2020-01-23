@@ -1,3 +1,8 @@
+let lullabySound = new Audio("/audio/twinkle twinkle.mp3");
+lullabySound.loop = false;
+lullabySound.volume = 0.3;
+// lullabySound.play();
+
 // START GAME BUTTON
 let start = document.getElementById("btn-start");
 

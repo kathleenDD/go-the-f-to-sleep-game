@@ -2,11 +2,26 @@
 // real values inside the function
 // add sounds - wine, sheep collected, obstacle touched
 
-// ===== STARTING VALUES =====
 let startT = 30; // duration of the game in seconds
-let plusT = 10; // additional time
+let plusT = 11; // additional time
 
-// const gameWindow = document.getElementById("game-window");
+
+// ===== GLOBAL VALUES =====
+// I am fully aware that this is not good practice
+
+const giggleSound = new Audio("/audio/giggle.mp3");
+const lullabySound = new Audio("/audio/twinkle twinkle.mp3");
+const collectSound = new Audio("/audio/coin-collect.mp3");
+const timesUpSound = new Audio("/audio/times_up.mp3");
+const mainSong = new Audio("/audio/game.mp3");
+
+mainSong.loop = true;
+mainSong.volume = 0.2;
+mainSong.play();
+
+var animationId;
+var sheepIntervalId = null;
+var obsIntervalId = null;
 const keyState = {};
 const player = {
   x: 0,
@@ -18,62 +33,54 @@ const sheepElements = [];
 const obsElements = [];
 const sheepCollected = [];
 
-
-// x (0-400)
-// y (0-340)
-
-window.onkeydown = function(e) {
-  keyState[e.code] = true;
-};
-
-window.onkeyup = function(e) {
-  keyState[e.code] = false;
-};
-
-const draw = () => {
-  if (keyState["Space"]) jumpChar(player);
-  if (keyState["ArrowRight"]) moveChar("right");
-  if (keyState["ArrowLeft"]) moveChar("left");
-  updateChar(player);
-  moveSheep(sheepElements);
-  moveObstacles(obsElements);
-  sheepCollision(sheepElements);
-  obsCollision(obsElements);
-  countSheep();
-  requestAnimationFrame(draw);
-};
-
-// ===== SHEEP COUNTER =====
-
-function countSheep() {
-  const numSheep = document.getElementById("counter");
-  numSheep.textContent = sheepCollected.length;
-}
-
 // ===== REACTIONS PER COLLISION=====
+
 function changeFace() {
   // changes face at the bottom
+  let reactFace = document.querySelector(".btm-face");
+  //   if (sheepCollision,)
+  // reactFace.src =
 }
 
 function printMsg() {
   // prints message per each collision
+  let printBox = document.getElementById("print-container");
 }
 
-// ===== WIN OR LOSE =====
+// ===== END GAME: WIN OR LOSE =====
+
+function winMsg() {
+  const endMsg = document.querySelector(".modal-content");
+  let msg = document.createElement("p");
+  msg.textContent = "You win! Don't you wish it's this easy in reality??";
+  endMsg.appendChild(msg);
+  console.log(endMsg);
+  //   document.querySelector(".modal").style.visibility = "visible";
+}
+
+function LoseMsg() {
+  const endMsg = document.querySelector(".modal-content");
+  let msg = document.createElement("p");
+  msg.textContent = "You lose! It's okay, still not as bad as in real life.";
+  endMsg.appendChild(msg);
+  console.log(endMsg);
+  //   document.querySelector(".modal").style.visibility = "visible";
+}
+
 function endGame() {
-  //   // pop up for when player won or lost
-    const endMsg = document.querySelector("modal-content");
-    msg = document.createElement("p");
-    if (sheepCollected.length >= 50) {
-        msg.textContent = "You win! Don't you wish it's this easy in reality??";
-    } else {
-        msg.textContent = "You lose! It's okay, still not as bad as real life."
-    }
-    endMsg.append(msg);
-    document.querySelector("modal").style.visibility = "visible";
+  // pop up for when player won or lost
+  if (sheepCollected.length >= 50) {
+    winMsg();
+  } else {
+    LoseMsg();
+  }
+  clearInterval(sheepIntervalId);
+  clearInterval(obsIntervalId);
+  window.cancelAnimationFrame(animationId);
 }
 
 // ===== CHARACTER =====
+
 function updateChar(player) {
   const character = document.getElementById("character");
   character.style.backgroundImage = "url(/images/me.png)";
@@ -123,23 +130,26 @@ function jumpChar(player) {
 }
 
 // ===== GENERATE SHEEP & OBSTACLES =====
+
 function setItems() {
   // generate sheep
-  setInterval(() => {
+  sheepIntervalId = setInterval(() => {
     createSheep();
   }, Math.floor(Math.random() * (3000 - 1000) + 1000));
   // generate obstacles
-  setInterval(() => {
+  obsIntervalId = setInterval(() => {
     createObstacles();
   }, Math.floor(Math.random() * (5000 - 2000) + 2000));
 }
+
+// ===== SHEEP =====
 
 function createSheep() {
   const gameWindow = document.getElementById("game-window");
   const newSheep = document.createElement("div");
   newSheep.className = "sheep";
   newSheep.style.backgroundImage = "url(/../images/sheep.png)";
-  const xy = {};
+  const xy = {}; // where coordinates and current DOM will be saved which will then be pushed to the array
   const x = 400;
   const y = Math.floor(Math.random() * 200);
   xy.x = x;
@@ -162,26 +172,15 @@ function moveSheep(arr) {
   }
 }
 
-function sheepCollision(arr) {
-  const character = document.getElementById("character");
-  const rect1 = character.getBoundingClientRect();
+// ===== SHEEP COUNTER =====
 
-  for (let i = 0; i < arr.length; i++) {
-    let sheepEl = arr[i].element;
-    let rect2 = sheepEl.getBoundingClientRect();
-    if (
-      rect1.x < rect2.x + rect2.width &&
-      rect1.x + rect1.width > rect2.x &&
-      rect1.y < rect2.y + rect2.height &&
-      rect1.y + rect1.height > rect2.y
-    ) {
-      sheepEl.style.backgroundImage = ""; // to clear the image of sheep once collected
-      sheepCollected.push(arr.splice(i, 1));
-    }
-  }
+function countSheep() {
+  const numSheep = document.getElementById("counter");
+  numSheep.textContent = sheepCollected.length; // prints the length of sheepCollected array
 }
 
 // ===== OBSTACLES =====
+
 function createObstacles() {
   const gameWindow = document.getElementById("game-window");
   const obstacle = document.createElement("div");
@@ -217,27 +216,51 @@ function moveObstacles(arr) {
   }
 }
 
-function obsCollision(arr) {
-    const character = document.getElementById("character");
-    const rect1 = character.getBoundingClientRect();
-  
-    for (let i = 0; i < arr.length; i++) {
-      let obsEl = arr[i].element;
-      let rect2 = obsEl.getBoundingClientRect();
-      if (
-        rect1.x < rect2.x + rect2.width &&
-        rect1.x + rect1.width > rect2.x &&
-        rect1.y < rect2.y + rect2.height &&
-        rect1.y + rect1.height > rect2.y
-      ) {
-        
-        obsEl.style.backgroundImage = ""; // to clear the image of sheep once collected
-        arr.splice(i, 1)
-      }
+// ===== COLLISION =====
+
+function sheepCollision(arr) {
+  const character = document.getElementById("character");
+  const rect1 = character.getBoundingClientRect();
+
+  for (let i = 0; i < arr.length; i++) {
+    let sheepEl = arr[i].element;
+    let rect2 = sheepEl.getBoundingClientRect();
+    if (
+      rect1.x < rect2.x + rect2.width &&
+      rect1.x + rect1.width > rect2.x &&
+      rect1.y < rect2.y + rect2.height &&
+      rect1.y + rect1.height > rect2.y
+    ) {
+      collectSound.play();
+      sheepEl.style.backgroundImage = ""; // to clear the image of sheep once collected
+      sheepCollected.push(arr.splice(i, 1)); // remove from array and push to collected array
     }
   }
+}
 
-// ===== WINE =====
+function obsCollision(arr) {
+  const character = document.getElementById("character");
+  const rect1 = character.getBoundingClientRect();
+
+  for (let i = 0; i < arr.length; i++) {
+    let obsEl = arr[i].element;
+    let rect2 = obsEl.getBoundingClientRect();
+    if (
+      rect1.x < rect2.x + 25 &&
+      rect1.x + rect1.width > rect2.x &&
+      rect1.y < rect2.y + 25 &&
+      rect1.y + rect1.height > rect2.y
+    ) {
+      // DO SOMETHING FOR OBSTACLES !!!
+      giggleSound.play();
+      arr.splice(i, 1);
+      obsEl.style.backgroundImage = "";
+    }
+  }
+}
+
+// ===== WINE & ADDITIONAL TIME =====
+
 function serveWine() {
   // changes color when more time is needed
   let wine = document.querySelector(".wine");
@@ -247,11 +270,12 @@ function serveWine() {
 
 function addTime() {
   // adds more time when necessary
-  // let numSheep = 10;
   if (sheepCollected.length < 50) {
     if (document.querySelector(".wine")) {
       serveWine();
       startTimer(plusT); // adds 10 more seconds
+    } else {
+      endGame();
     }
   } else {
     endGame();
@@ -259,6 +283,7 @@ function addTime() {
 }
 
 // ===== TIMER =====
+
 function startTimer(num) {
   // starts 30s timer
   let timer = setInterval(() => {
@@ -266,12 +291,13 @@ function startTimer(num) {
     document.getElementById("timer").textContent = num;
     if (num <= 0) {
       clearInterval(timer); // stops timer
-      addTime(countSheep);
+      addTime();
     }
   }, 1000);
 }
 
 // ===== COUNTDOWN on window load =====
+
 function countDown() {
   let printDiv = document.getElementById("print-container");
   let sec = document.getElementById("countdown").textContent;
@@ -281,12 +307,39 @@ function countDown() {
     if (sec <= 0) {
       clearInterval(counter); // stops the counter
       printDiv.innerHTML = ""; // clears the countdown container
-      startTimer(startT);
-      requestAnimationFrame(draw);
-      setItems();
+      initialize();
     }
   }, 1000);
 }
+
+// ===== "Main" Functions =====
+
+function initialize() {
+  startTimer(startT);
+  animationId = requestAnimationFrame(main);
+  setItems();
+}
+
+const main = () => {
+  if (keyState["Space"]) jumpChar(player);
+  if (keyState["ArrowRight"]) moveChar("right");
+  if (keyState["ArrowLeft"]) moveChar("left");
+  updateChar(player);
+  moveSheep(sheepElements);
+  moveObstacles(obsElements);
+  sheepCollision(sheepElements);
+  obsCollision(obsElements);
+  countSheep();
+  animationId = requestAnimationFrame(main);
+};
+
+window.onkeydown = function(e) {
+  keyState[e.code] = true;
+};
+
+window.onkeyup = function(e) {
+  keyState[e.code] = false;
+};
 
 window.onload = countDown;
 

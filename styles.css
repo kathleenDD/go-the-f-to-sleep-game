@@ -495,9 +495,10 @@ img.btm-face {
     display: flex;
     align-items: center;
     justify-content: center;
+    visibility: hidden;
 }
 
-#message {
+.message {
     font-size: 1.5em;
 }
 

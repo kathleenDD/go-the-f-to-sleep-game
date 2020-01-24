@@ -1,7 +1,10 @@
 // add sounds - wine, sheep collected, obstacle touched
 
+<<<<<<< HEAD
 // start time = 30s
 // addl time = 11 s
+=======
+>>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
 
 // ===== GLOBAL =====
 // I am fully aware that this is not good practice
@@ -35,8 +38,11 @@ let sheep = class {
 }
 
 var animationId;
+<<<<<<< HEAD
 // var sheepIntervalId = null;
 // var obsIntervalId = null;
+=======
+>>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
 const keyState = {};
 const player = {
   x: 0,
@@ -44,31 +50,73 @@ const player = {
   isAirbourne: false,
   direction: 180
 };
+<<<<<<< HEAD
 // const sheepElements = [];
 // const obsElements = [];
 // const sheepCollected = [];
+=======
+const sheepElements = [];
+const sheepCollected = [];
+var sheepIntervalId = null;
+var obsIsTouched = false;
+const obsElements = [];
+var obsIntervalId = null;
+>>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
 
 // ===== REACTIONS PER COLLISION=====
 
-function changeFace() {
-  // changes face at the bottom
+function winReaction() {
+  // prints message per each collision
   let reactFace = document.querySelector(".btm-face");
+<<<<<<< HEAD
   if (obstacle.isTouched === "true") {
     obstacle.isTouched = "false";
     reactFace.src = url("/animojis/hyper1.png")
   } 
   //   if (sheepCollision,)
   // reactFace.src.toggle("url(/images/me.png)")
+=======
+  let printBox = document.getElementById("msg-container");
+  let message = document.createElement("p");
+
+  const winImages = [
+    "/../animojis/serious1.png",
+    "/../animojis/sleepy2.png",
+    "/../animojis/sleepy1.png",
+    "/animojis/serious2.png"
+  ];
+  let randNum = Math.floor(Math.random() * winImages.length);
+  reactFace.src = winImages[randNum];
+  // message.className = "message";
+  // message.innerHTML = "Dodo time";
+  // printBox.appendChild(message);
+  // printBox.style.visibility = visible;
+>>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
 }
 
-function reactMsg() {
-  // prints message per each collision
-  let printBox = document.getElementById("print-container");
+function loseReaction() {
+  let reactFace = document.querySelector(".btm-face");
+  let printBox = document.getElementById("msg-container");
+  let message = document.createElement("p");
+  const loseImages = [
+    "/../animojis/happy2.png",
+    "/../animojis/hyper1.png",
+    "/../animojis/hyper2.png",
+    "/../animojis/happy3.png"
+  ];
+  let randNum = Math.floor(Math.random() * loseImages.length);
+  reactFace.src = loseImages[randNum];
+  // message.className = "message";
+  // message.innerHTML = "Weeee!!!!";
+  // printBox.appendChild(message);
+  // printBox.style.visibility = visible;
+  
 }
 
 // ===== END GAME: WIN OR LOSE =====
 
 function printMsg() {
+<<<<<<< HEAD
   // modal
   let modal = document.querySelector(".modal");
   const modalContent = document.querySelector(".modal-content");
@@ -93,6 +141,32 @@ function printMsg() {
 
   modalContent.append(msg);
   modal.classList.toggle("show-modal");
+=======
+    // modal
+    let modal = document.querySelector(".modal");
+    const modalContent = document.querySelector(".modal-content");
+    let msg = document.createElement("p");
+  
+    // I could have done better code than this:
+    if (sheepCollected.length >= 50) {
+      msg.innerHTML = `<p class="text-em">You Win!</p><br>`;
+      msg.innerHTML += `<img class ="lrg-icon pulse" src="/animojis/dodo1.png"><br><br>`
+      msg.innerHTML += `Don't you wish it's this easy in reality??<br><br>`;
+    } else {
+      msg.innerHTML = `<p class="text-em">You Lose!</p><br>`;
+      msg.innerHTML += `<img class="lrg-icon pulse" src="/animojis/hyper2.png"><br><br>`
+      msg.innerHTML += `But it's okay, it's still not as bad as in real life.<br><br>`;
+    }
+  
+    msg.innerHTML +=
+    `<button class="btn hvr-pulse-grow" id="btn-start"
+    onclick="window.location.reload();">TRY AGAIN</button>
+    <button class="btn hvr-pulse-grow" id="btn-home"
+    onclick="location.href='/index.html'">HOME</button>`;
+  
+    modalContent.append(msg);
+    modal.classList.toggle("show-modal");
+>>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
 }
 
 function endGame() {
@@ -100,8 +174,13 @@ function endGame() {
   const gameWindow = document.getElementById("game-window");
   printMsg();
   gameWindow.innerHTML = "";
+<<<<<<< HEAD
   clearInterval(sheep.intervalId);
   clearInterval(obstacle.intervalId);
+=======
+  clearInterval(sheepIntervalId);
+  clearInterval(obsIntervalId);
+>>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
   window.cancelAnimationFrame(animationId);
 }
 
@@ -119,7 +198,6 @@ function toggleModal() {
 function updateChar(player) {
   const character = document.getElementById("character");
   character.style.backgroundImage = "url(/images/me.png)";
-
   character.style.transform = `rotateY(${player.direction}deg) translate(${
     player.direction === 0 ? player.x : -player.x
   }px, ${-player.y}px)`;
@@ -223,8 +301,8 @@ function createObstacles() {
   // create random obstacles
   const obsImages = [
     "url(/../images/robot.png)",
-    "url(/../images/gamepad.png",
-    "/images/ice-cream.png"
+    "url(/../images/gamepad.png)",
+    "url(/images/ice-cream.png)"
   ];
   let randNum = Math.floor(Math.random() * obsImages.length);
   obstacle.style.backgroundImage = obsImages[randNum];
@@ -265,6 +343,7 @@ function sheepCollision(arr) {
       rect1.y < rect2.y + rect2.height &&
       rect1.y + rect1.height > rect2.y
     ) {
+      winReaction();
       collectSound.play();
       sheepEl.style.backgroundImage = ""; // to clear the image of sheep once collected
       sheep.collected.push(arr.splice(i, 1)); // remove from array and push to collected array
@@ -285,12 +364,20 @@ function obsCollision(arr) {
       rect1.y < rect2.y + 20 &&
       rect1.y + rect1.height > rect2.y
     ) {
+<<<<<<< HEAD
       giggleSound.play();
       if (obstacle.isTouched === "false") {
         obstacle.isTouched = "true";
         character.classList.toggle("move");
       }
       obsEl.style.backgroundImage = "";
+=======
+      // DO SOMETHING FOR OBSTACLES !!!
+      loseReaction();
+      giggleSound.play();
+      obsEl.style.backgroundImage = "";
+      if (obsIsTouched === false) obsIsTouched = true;
+>>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
       arr.splice(i, 1);
     }
   }
@@ -360,7 +447,19 @@ function initialize() {
   setItems();
 }
 
+// let tietime=0;
+// setInterval(() =>  tietime++ ,1000)
+
 const main = () => {
+  if(obsIsTouched === true) {
+    obsIsTouched = false;
+    setTimeout(() => {
+      requestAnimationFrame(main)
+      // tietime = 0;
+    },2000)
+    return;
+  }
+
   if (keyState["Space"]) jumpChar(player);
   if (keyState["ArrowRight"]) moveChar("right");
   if (keyState["ArrowLeft"]) moveChar("left");

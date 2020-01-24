@@ -429,16 +429,6 @@ GAME WINDOW
     bottom: 0;
 }
 
-.move {
-    animation: move 2s;
-}
-
-@keyframes move {
-    20%, 100% {
-      transform: translate(200px, 0);
-    }
-  }
-
 .sheep {
     background-size: contain;
     width: 50px;
@@ -486,53 +476,14 @@ img.btm-face {
 
 }
 
-#msg-container {
-   width: 100px;
-    height: 50px;
-    background: #fff;
-    border-radius: 25px;
-    border: 3px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-}
-
 .message {
     font-family: 'Fredoka One', sans-serif;
     font-size: 1.5em;
-    color: #11242d;
+    color: #f1eece;
     /* text-shadow: 2px 2px #000; */
-    background: #f1eece;
+    background: #11242d;
+    border: 2px solid #000;
     padding: 20px;
     border-radius: 25px;
-}
-
-/*
-======
-pound animation
-======
-*/
-
-.pound{
-	animation-name: pound;
-	-webkit-animation-name: pound;	
-
-	animation-duration: 0.5s;	
-	-webkit-animation-duration: 0.5s;
-
-	animation-timing-function: ease;	
-	-webkit-animation-timing-function: ease;
-
-	animation-iteration-count: infinite;
-	-webkit-animation-iteration-count: infinite;
-
-	visibility: visible !important;	
-}
-@keyframes pound {
-	to { transform: scale(1.2); }
-}
-@-webkit-keyframes pound {
-	to { transform: scale(1.2); }
 }
 

@@ -245,7 +245,7 @@ function winReaction() {
   let randNum = Math.floor(Math.random() * winImages.length);
   reactFace.src = winImages[randNum];
 
-  // prints should-be relevant message
+  // prints random messages
   let printBox = document.getElementById("print-container");
   const winMessages = [
     "Dodo time", "* yaaaawn *", "nite-nite"
@@ -267,7 +267,7 @@ function loseReaction() {
   let randNum = Math.floor(Math.random() * loseImages.length);
   reactFace.src = loseImages[randNum];
 
-  // prints should-be relevant message
+  // prints random messages
   let printBox = document.getElementById("print-container");
   const loseMessages = [
     "Weeeeeee!", "Non!", "Play time!" 

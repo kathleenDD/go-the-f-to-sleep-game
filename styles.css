@@ -462,7 +462,7 @@ BOTTOM
 */
 
 #face-container {
-    margin: 0 30px;
+    margin: 0 20px;
 }
 
 
@@ -472,7 +472,7 @@ img.btm-face {
 
 #print-container {
     width: 200px;
-    margin: 0 20px;
+    /* margin: 0 20px; */
 }
 
 #countdown {
@@ -499,7 +499,13 @@ img.btm-face {
 }
 
 .message {
+    font-family: 'Fredoka One', sans-serif;
     font-size: 1.5em;
+    color: #11242d;
+    /* text-shadow: 2px 2px #000; */
+    background: #f1eece;
+    padding: 20px;
+    border-radius: 25px;
 }
 
 /*

@@ -9,11 +9,11 @@
 // ===== GLOBAL =====
 // I am fully aware that this is not good practice
 
-const giggleSound = new Audio("/audio/giggle.mp3");
-const lullabySound = new Audio("/audio/twinkle twinkle.mp3");
-const collectSound = new Audio("/audio/coin-collect.mp3");
-const timesUpSound = new Audio("/audio/times_up.mp3");
-const mainSong = new Audio("/audio/game.mp3");
+const giggleSound = new Audio("./audio/giggle.mp3");
+const lullabySound = new Audio("./audio/twinkle twinkle.mp3");
+const collectSound = new Audio("./audio/coin-collect.mp3");
+const timesUpSound = new Audio("./audio/times_up.mp3");
+const mainSong = new Audio("./audio/game.mp3");
 
 // mainSong.loop = true;
 // mainSong.volume = 0.2;
@@ -63,6 +63,7 @@ const obsElements = [];
 var obsIntervalId = null;
 >>>>>>> a504a7996343dc88fccb708ba7a76537a069f2a5
 
+<<<<<<< HEAD
 // ===== REACTIONS PER COLLISION=====
 
 function winReaction() {
@@ -192,12 +193,14 @@ let trigger = document.querySelector(".trigger");
 function toggleModal() {
   modalBox.classList.toggle("show-modal");
 }
+=======
+>>>>>>> 44ada13a963d3bdc78b4d65c79e7821409fef8cc
 
 // ===== CHARACTER =====
 
 function updateChar(player) {
   const character = document.getElementById("character");
-  character.style.backgroundImage = "url(/images/me.png)";
+  character.style.backgroundImage = "url(./images/me.png)";
   character.style.transform = `rotateY(${player.direction}deg) translate(${
     player.direction === 0 ? player.x : -player.x
   }px, ${-player.y}px)`;
@@ -262,7 +265,7 @@ function createSheep() {
   const gameWindow = document.getElementById("game-window");
   const newSheep = document.createElement("div");
   newSheep.className = "sheep";
-  newSheep.style.backgroundImage = "url(/../images/sheep.png)";
+  newSheep.style.backgroundImage = "url(./images/sheep.png)";
   const xy = {}; // where coordinates and current DOM will be saved which will then be pushed to the array
   const x = 400;
   const y = Math.floor(Math.random() * 200); // could be any number???
@@ -300,9 +303,9 @@ function createObstacles() {
   obstacle.className = "obstacles";
   // create random obstacles
   const obsImages = [
-    "url(/../images/robot.png)",
-    "url(/../images/gamepad.png)",
-    "url(/images/ice-cream.png)"
+    "url(./images/robot.png)",
+    "url(./images/gamepad.png)",
+    "url(./images/ice-cream.png)"
   ];
   let randNum = Math.floor(Math.random() * obsImages.length);
   obstacle.style.backgroundImage = obsImages[randNum];
@@ -390,7 +393,7 @@ function obsCollision(arr) {
 function serveWine() {
   // changes color when more time is needed
   let wine = document.querySelector(".wine");
-  wine.src = "/images/bw-wine.png";
+  wine.src = "./images/bw-wine.png";
   wine.classList.remove("wine");
 }
 
@@ -406,6 +409,86 @@ function addTime() {
   } else {
     endGame();
   }
+}
+
+// ===== REACTIONS PER COLLISION=====
+
+function winReaction() {
+  // prints message per each collision
+  let reactFace = document.querySelector(".btm-face");
+  let printBox = document.getElementById("msg-container");
+  let message = document.createElement("p");
+
+  const winImages = [
+    "./animojis/serious1.png",
+    "./animojis/sleepy2.png",
+    "./animojis/sleepy1.png",
+    "./animojis/serious2.png"
+  ];
+  let randNum = Math.floor(Math.random() * winImages.length);
+  reactFace.src = winImages[randNum];
+  // message.className = "message";
+  // message.innerHTML = "Dodo time";
+  // printBox.appendChild(message);
+  // printBox.style.visibility = visible;
+}
+
+function loseReaction() {
+  let reactFace = document.querySelector(".btm-face");
+  let printBox = document.getElementById("msg-container");
+  let message = document.createElement("p");
+  const loseImages = [
+    "./animojis/happy2.png",
+    "./animojis/hyper1.png",
+    "./animojis/hyper2.png",
+    "./animojis/happy3.png"
+  ];
+  let randNum = Math.floor(Math.random() * loseImages.length);
+  reactFace.src = loseImages[randNum];
+  // message.className = "message";
+  // message.innerHTML = "Weeee!!!!";
+  // printBox.appendChild(message);
+  // printBox.style.visibility = visible;
+  
+}
+
+// ===== END GAME: WIN OR LOSE =====
+
+function printMsg() {
+    // modal
+    let modal = document.querySelector(".modal");
+    const modalContent = document.querySelector(".modal-content");
+    let msg = document.createElement("p");
+  
+    // I could have done better code than this:
+    if (sheepCollected.length >= 50) {
+      msg.innerHTML = `<p class="text-em">You Win!</p><br>`;
+      msg.innerHTML += `<img class ="lrg-icon pulse" src="./animojis/dodo1.png"><br><br>`
+      msg.innerHTML += `Don't you wish it's this easy in reality??<br><br>`;
+    } else {
+      msg.innerHTML = `<p class="text-em">You Lose!</p><br>`;
+      msg.innerHTML += `<img class="lrg-icon pulse" src="./animojis/hyper2.png"><br><br>`
+      msg.innerHTML += `But it's okay, it's still not as bad as in real life.<br><br>`;
+    }
+  
+    msg.innerHTML +=
+    `<button class="btn hvr-pulse-grow" id="btn-start"
+    onclick="window.location.reload();">TRY AGAIN</button>
+    <button class="btn hvr-pulse-grow" id="btn-home"
+    onclick="location.href='./index.html'">HOME</button>`;
+  
+    modalContent.append(msg);
+    modal.classList.toggle("show-modal");
+}
+
+function endGame() {
+  // pop up for when player won or lost
+  const gameWindow = document.getElementById("game-window");
+  printMsg();
+  gameWindow.innerHTML = "";
+  clearInterval(sheepIntervalId);
+  clearInterval(obsIntervalId);
+  window.cancelAnimationFrame(animationId);
 }
 
 // ===== TIMER =====
@@ -447,15 +530,12 @@ function initialize() {
   setItems();
 }
 
-// let tietime=0;
-// setInterval(() =>  tietime++ ,1000)
 
 const main = () => {
   if(obsIsTouched === true) {
     obsIsTouched = false;
     setTimeout(() => {
-      requestAnimationFrame(main)
-      // tietime = 0;
+      requestAnimationFrame(main);
     },2000)
     return;
   }

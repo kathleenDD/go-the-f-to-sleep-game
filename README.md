@@ -2,7 +2,7 @@
 Ironhack Project #1 : The Game<br>
 <b>By Kathleen Domingo <i>(with the help of the Ironhack instructors and some classmates)</i></b>
 
-<h4>Go The F* To Sleep</h4> is a fun (I hope so) and simple game (with hundred lines of code)
+<h4>Go The F* To Sleep</h4> is a fun (I hope so) and simple game (with hundreds of lines of code)
 dedicated to parents all around the world who have struggled / still struggling to make their child/ren sleep.<br><br>
 
 If you are not a parent yet, then you'll get a glimpse of how it is by playing this game (well, not really).<br><br>

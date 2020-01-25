@@ -14,4 +14,4 @@ could slow you down by 2 seconds when "touched". So avoid the toys and sweets th
 
 Enjoy!
 
-<font size="6">**  Most, if not all icons are created by Freepik and downloaded from flaticon.com. Backround image designed by vectorpouch, downloaded from freepik.com.</font>
+<i>**  Most, if not all icons are created by Freepik and downloaded from flaticon.com. Backround image designed by vectorpouch, downloaded from freepik.com.</i>

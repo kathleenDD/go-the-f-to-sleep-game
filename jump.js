@@ -82,7 +82,7 @@ function setItems() {
   // generate sheep
   sheepIntervalId = setInterval(() => {
     createSheep();
-  }, Math.floor(Math.random() * (2000 - 500) + 500));
+  }, Math.floor(Math.random() * (2000 - 300) + 300));
   // generate obstacles
   obsIntervalId = setInterval(() => {
     createObstacles();

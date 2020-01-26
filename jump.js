@@ -9,7 +9,7 @@ const mainSong = new Audio("./audio/game.mp3");
 mainSong.loop = true;
 mainSong.volume = 0.3;
 collectSound.volume = 0.3;
-giggleSoud.volume = 0.3;
+giggleSound.volume = 0.3;
 mainSong.play();
 
 var animationId;

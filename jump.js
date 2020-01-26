@@ -38,7 +38,7 @@ function updateChar(player) {
 }
 
 function moveChar(direction) {
-  // character movement, up or down
+  // character movement, left or right
   if (direction === "right" && player.x < 370) {
     player.x += 3;
     player.direction = 180;

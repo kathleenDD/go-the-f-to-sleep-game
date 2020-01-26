@@ -2,13 +2,14 @@
 // I am fully aware that this is not good practice
 
 const giggleSound = new Audio("./audio/giggle.mp3");
-const lullabySound = new Audio("./audio/twinkle twinkle.mp3");
 const collectSound = new Audio("./audio/coin-collect.mp3");
 const timesUpSound = new Audio("./audio/times_up.mp3");
 const mainSong = new Audio("./audio/game.mp3");
 
 mainSong.loop = true;
-mainSong.volume = 0.2;
+mainSong.volume = 0.3;
+collectSound.volume = 0.3;
+giggleSoud.volume = 0.3;
 mainSong.play();
 
 var animationId;
@@ -310,6 +311,7 @@ function printMsg() {
 function endGame() {
   // pop up for when player won or lost
   const gameWindow = document.getElementById("game-window");
+  timesUpSound.play();
   printMsg();
   gameWindow.innerHTML = "";
   clearInterval(sheepIntervalId);
